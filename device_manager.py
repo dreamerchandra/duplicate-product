@@ -5,6 +5,7 @@ from phone_helper import get_phone_info_for_target
 from phone_helper import label_from_tittle as phone_label_extractor
 from pricing_manager import PricingManger
 from product_manager import ProductManager
+from target_manager import TargetManger
 
 
 class DeviceManger:
@@ -35,15 +36,11 @@ class DeviceManger:
             'info': device.get('info'),
         }
         [is_duplicated, target_uuid, target_item] = duplicate_cb(*duplicate_cb_args)
-        if is_duplicated:
-            info['target_uuid'] = target_uuid
-            info['site_name'] = target_item.get('site_name')
-            info['pricing'] = target_item.get('price')
-            info['link'] = target_item.get('link')
-            pricing_csv.append_row(info)
-        else:
-            product_csv.append_row(info)
-
+        if not is_duplicated: return
+        info.update(TargetManger.get_by_id(target_uuid))
+        pricing_csv.append_row(info)
+        TargetManger.mark_duplicate(target_uuid)
+  
     @staticmethod
     def create_product_pricing(phones, laps, tvs, target):
         """
@@ -71,5 +68,6 @@ class DeviceManger:
             DeviceManger._create_product_pricing(
                 tv, get_duplicate_tv_target_id, duplicate_cb_args, pricing_csv, product_csv)
         
+        product_csv.extend_row(TargetManger.get_non_duplicate())
         pricing_csv.write_to_csv()
         product_csv.write_to_csv()

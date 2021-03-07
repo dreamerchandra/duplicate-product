@@ -44,3 +44,4 @@ def normalize_csv(data):
         if (not entity.get('uuid')):
             entity['uuid'] = str(uuid.uuid4())
     return data
+

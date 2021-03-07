@@ -3,6 +3,7 @@ from csv_helper import normalize_csv
 from csv_helper import read as read_csv
 from csv_helper import write_to_csv
 from device_manager import DeviceManger
+from target_manager import TargetManger
 
 
 def split_devices(data):
@@ -32,7 +33,7 @@ def main():
     DeviceManger.update_info(tv, 'TV')
     target = read_csv("./data/target.csv")
     target = normalize_csv(target)
-    write_to_csv(target, 'target.csv', './out')
+    TargetManger.update_uuid_to_target_manager(target)
     DeviceManger.create_product_pricing(phone, lap, tv, target)
 
 

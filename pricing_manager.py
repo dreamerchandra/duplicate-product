@@ -10,4 +10,4 @@ class PricingManger:
         self.row.append(entity)
 
     def write_to_csv(self):
-        write_to_csv(self.row, 'pricing.csv', './out')
+        write_to_csv(self.row, 'duplicated-product.csv', './out')
