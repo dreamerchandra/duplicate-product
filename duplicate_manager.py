@@ -33,7 +33,7 @@ def get_duplicate_phone_target_id(phone, target, title_extractor, get_info):
         label2 = title_extractor(title2)
         score = count_duplicate(label1, label2)
         if score > 50 and info_matcher(info1, info2):
-            return [True, item.get('uuid'), item.get('price')]
+            return [True, item.get('uuid'), item]
     return [False, None, None]
 
 
@@ -47,7 +47,7 @@ def get_duplicate_lap_target_id(lap, target, title_extractor, get_info):
         label2 = title_extractor(title2)
         score = count_duplicate(label1, label2)
         if score > 50 and info_matcher(info1, info2):
-            return [True, target.get('uuid'), target.get('price')]
+            return [True, item.get('uuid'), item]
     return [False, None, None]
 
 
@@ -61,5 +61,5 @@ def get_duplicate_tv_target_id(tv, target, title_extractor, get_info):
         label2 = title_extractor(title2)
         score = count_duplicate(label1, label2)
         if score > 50 and info_matcher(info1, info2):
-            return [True, target.get('uuid'), target.get('price')]
+            return [True, item.get('uuid'), item]
     return [False, None, None]

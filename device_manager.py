@@ -34,10 +34,12 @@ class DeviceManger:
             'title': device.get('title') or device.get('name'),
             'info': device.get('info'),
         }
-        [is_duplicated, target_uuid, pricing] = duplicate_cb(*duplicate_cb_args)
+        [is_duplicated, target_uuid, target_item] = duplicate_cb(*duplicate_cb_args)
         if is_duplicated:
             info['target_uuid'] = target_uuid
-            info['pricing'] = pricing
+            info['site_name'] = target_item.get('site_name')
+            info['pricing'] = target_item.get('price')
+            info['link'] = target_item.get('link')
             pricing_csv.append_row(info)
         else:
             product_csv.append_row(info)
